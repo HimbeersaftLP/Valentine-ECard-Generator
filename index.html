@@ -1,0 +1,111 @@
+﻿<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Valentine's Day Card Generator</title>
+    <link rel="stylesheet" href="font/font.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="style.css" type="text/css" media="all"/>
+</head>
+<body>
+<h1>Valentine's Day Card Generator</h1>
+<div class="main">
+    <div class="canvascontainer">
+        <canvas id="canvas" width="960" height="720">Your browser sucks</canvas>
+    </div>
+    <div class="settings">
+        <div class="setting">
+            <label for="image">Image</label>
+            <button id="image">Select image from list</button>
+            <button id="customImage">Upload image</button>
+        </div>
+        <div class="setting">
+            <label for="mtext">Text</label>
+            <textarea id="mtext"></textarea>
+        </div>
+        <div class="setting">
+            <label for="to">To</label>
+            <input type="text" id="to"/>
+        </div>
+        <div class="setting">
+            <label for="from">From</label>
+            <input type="text" id="from"/>
+        </div>
+        <div class="setting">
+            <label for="backcl">Background Color</label>
+            <button class="jscolor {closable:true,closeText:'Close',valueElement:'backcl',value:'cc2211',onFineChange:'renderCard()'}"
+                    id="backclb">Click to select
+            </button>
+            <input id="backcl" value="CC2211"/>
+
+        </div>
+        <div id="fontoptions">
+            <div class="setting">
+                <label for="textcl">Text Color</label>
+                <button class="jscolor {closable:true,closeText:'Close',valueElement:'textcl',value:'ffffff',onFineChange:'renderCard()'}"
+                        id="textclb">Click to select
+                </button>
+                <input id="textcl" value="FFFFFF"/>
+            </div>
+            <div class="setting">
+                <label for="fontstyle">Effect</label>
+                <select id="fontstyle">
+                    <option value="">Normal</option>
+                    <option value="bold">Bold</option>
+                    <option value="oblique">Oblique</option>
+                    <option value="oblique bold">Bold & Oblique</option>
+                </select>
+            </div>
+            <div class="setting">
+                <label for="font">Font</label>
+                <input type="text" id="font" value="Comic Neue"/>
+            </div>
+            <div class="setting">
+                <label for="size">Size</label>
+                <input type="number" id="size" value="1" step="0.1"/>
+            </div>
+        </div>
+        <footer style="margin-top: 2rem;">
+            <small style="color: grey;">Website: &copy;2019 HimbeersaftLP</small>
+        </footer>
+    </div>
+</div>
+<div class="window" id="imagePicker" style="display: none;">
+    <div class="category">
+        <label for="category">Category</label>
+        <select id="category">
+            <option>Your browser sucks</option>
+        </select>
+    </div>
+    <div id="images">
+
+    </div>
+</div>
+<div class="window" id="customImageUploader" style="display: none;">
+    <input id="customImageFile" type="file">
+    <button id="customImageConfirm">Okay</button>
+</div>
+<div class="window" id="customImageCropper" style="display: none;">
+    <p>Draw over the part of the image you want to keep, then press crop to preview and confirm to save changes. Your
+        image will appear under the uploaded category (on this device only).</p>
+    <label for="penSize">Brush size</label>
+    <input id="penSize" type="range" min="1" max="50" value="10">
+
+    <button id="cropCrop">Crop</button>
+    <button id="cropConfirm">Confirm</button>
+    <div class="cropCanvasContainer">
+        <canvas id="originalImage"></canvas>
+        <canvas id="croppingMask"></canvas>
+    </div>
+</div>
+<canvas id="fontPreloader" width="1" height="1" style="width: 0; height: 0;"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.nopromises.min.js"
+        integrity="sha256-wVLovZQ/gu9lwfIJ50Y4kJLZH54WqgJJTaNHlbkf72M=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"
+        integrity="sha256-CJWfUCeP3jLdUMVNUll6yQx37gh9AKmXTRxvRf7jzro=" crossorigin="anonymous"></script>
+<script src="js/script.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/crop.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/draw.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/fontPreloader.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

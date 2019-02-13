@@ -1,0 +1,43 @@
+/* Credits for the font: http://comicneue.com/ */
+
+@font-face {
+    font-family: 'Comic Neue';
+    src: url('ComicNeue-Regular.eot');
+    src: url('ComicNeue-Regular.eot?#iefix') format('embedded-opentype'),
+    url('ComicNeue-Regular.woff2') format('woff2'),
+    url('ComicNeue-Regular.woff') format('woff'),
+    url('ComicNeue-Regular.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Comic Neue';
+    src: url('ComicNeue-Regular-Oblique.eot');
+    src: url('ComicNeue-Regular-Oblique.eot?#iefix') format('embedded-opentype'),
+    url('ComicNeue-Regular-Oblique.woff2') format('woff2'),
+    url('ComicNeue-Regular-Oblique.woff') format('woff'),
+    url('ComicNeue-Regular-Oblique.ttf') format('truetype');
+    font-weight: normal;
+    font-style: oblique;
+}
+
+@font-face {
+    font-family: 'Comic Neue';
+    src: url('ComicNeue-Bold.eot');
+    src: url('ComicNeue-Bold.eot?#iefix') format('embedded-opentype'),
+    url('ComicNeue-Bold.woff2') format('woff2'),
+    url('ComicNeue-Bold.woff') format('woff'),
+    url('ComicNeue-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Comic Neue';
+    src: url('ComicNeue-Bold-Oblique.eot');
+    src: url('ComicNeue-Bold-Oblique.eot?#iefix') format('embedded-opentype'),
+    url('ComicNeue-Bold-Oblique.woff2') format('woff2'),
+    url('ComicNeue-Bold-Oblique.woff') format('woff'),
+    url('ComicNeue-Bold-Oblique.ttf') format('truetype');
+    font-weight: bold;
+    font-style: oblique;
+}
