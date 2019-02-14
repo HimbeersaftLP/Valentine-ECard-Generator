@@ -15,6 +15,10 @@ const font = document.getElementById("font");
 const fsize = document.getElementById("size");
 const bcolor = document.getElementById("backcl");
 const tcolor = document.getElementById("textcl");
+const saveImageBtn = document.getElementById("saveImage");
+const saveImageWin = document.getElementById("saveImageWindow");
+const saveImageClose = document.getElementById("saveImageClose");
+const saveImageImage = document.getElementById("saveImageImg");
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d", {alpha: false});
@@ -94,6 +98,13 @@ function addImageOption(name, url, source) {
     imagesl.appendChild(pickerElement);
 }
 
+saveImageBtn.addEventListener("click", function () {
+    saveImageWin.style.display = "";
+    saveImageImage.src = canvas.toDataURL();
+});
+saveImageClose.addEventListener("click", function () {
+    saveImageWin.style.display = "none";
+});
 imagebtn.addEventListener("click", function () {
     picker.style.display = "";
     updateImglist();

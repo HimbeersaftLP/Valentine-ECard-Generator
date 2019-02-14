@@ -95,6 +95,10 @@ button.jscolor {
     opacity: 0.3;
 }
 
+#saveImageImg {
+    width: 100%;
+}
+
 @media (min-width: 600px) {
     .main {
         display: flex;
