@@ -17,12 +17,19 @@ const bcolor = document.getElementById("backcl");
 const tcolor = document.getElementById("textcl");
 const saveImageBtn = document.getElementById("saveImage");
 const saveImageWin = document.getElementById("saveImageWindow");
-const saveImageClose = document.getElementById("saveImageClose");
 const saveImageImage = document.getElementById("saveImageImg");
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d", {alpha: false});
 ctx.textBaseline = "middle";
+
+Array.from(document.getElementsByClassName("window")).forEach(w => {
+    const b = document.createElement("button");
+    b.className = "windowCloseBtn";
+    b.innerHTML = "&times;";
+    b.addEventListener("click", () => w.style.display = "none");
+    w.insertBefore(b, w.firstChild);
+});
 
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
@@ -58,22 +65,22 @@ function updateImglist() {
     }
     if (scategory.value === "Uploaded") {
         localforage.getItem("images", function (err, data) {
-            if (err) return;
+            if (err || data === null) return;
             const currentImages = data.split("|");
             for (let i = 0; i < currentImages.length; i++) {
-                addImageOption("Upload #" + (i + 1), currentImages[i]);
+                addImageOption("Upload #" + (i + 1), currentImages[i], true);
             }
         });
     } else {
         for (const name in heads[scategory.value]) {
             let image = heads[scategory.value][name];
-            addImageOption(image.name, "./images/" + name + ".png", image.source);
+            addImageOption(image.name, "./images/" + name + ".png", false, image.source);
         }
     }
     updateFont();
 }
 
-function addImageOption(name, url, source) {
+function addImageOption(name, url, uploaded, source) {
     if (!selectedImage) selectedImage = url;
 
     const pickerElement = document.createElement("div");
@@ -86,6 +93,12 @@ function addImageOption(name, url, source) {
     const imageInfo = document.createElement("div");
     imageInfo.className = "imageInfo";
     imageInfo.appendChild(document.createTextNode(name));
+
+    if (uploaded) {
+        const imageDelete = document.createElement("button");
+        imageDelete.appendChild(document.createTextNode("Delete"));
+        imageInfo.appendChild(imageDelete);
+    }
 
     if (source) {
         const imageDetails = document.createElement("small");
@@ -102,9 +115,6 @@ saveImageBtn.addEventListener("click", function () {
     saveImageWin.style.display = "";
     saveImageImage.src = canvas.toDataURL();
 });
-saveImageClose.addEventListener("click", function () {
-    saveImageWin.style.display = "none";
-});
 imagebtn.addEventListener("click", function () {
     picker.style.display = "";
     updateImglist();
@@ -115,6 +125,19 @@ imagesl.addEventListener("click", function (e) {
         p = p.parentElement;
     }
     selectedImage = p.getAttribute("data-image-url");
+    if (e.target.tagName === "BUTTON") {
+        localforage.getItem("images", function (err, data) {
+            if (err) return;
+            let currentImages = data.split("|");
+            currentImages = currentImages.filter((img) => {
+                return img !== selectedImage;
+            });
+            data = currentImages.join("|");
+            if (data === "") data = null;
+            localforage.setItem("images", data, updateImglist);
+        });
+        return;
+    }
     picker.style.display = "none";
     renderCard();
 });

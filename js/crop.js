@@ -33,6 +33,7 @@
                     const draw = initDraw();
 
                     function cropCropListener() {
+                        if (!draw.hasDrawnAnything()) return;
                         const maskCtx = maskCanvas.getContext("2d");
                         const maskImageData = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
                         const imageImageData = imageCtx.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
@@ -59,6 +60,7 @@
                     cropCrop.addEventListener("click", cropCropListener);
 
                     cropConfirm.addEventListener("click", function cropConfirmListener() {
+                        cropCropListener();
                         const url = imageCanvas.toDataURL();
                         let currentImages = [];
                         localforage.getItem("images", function (err, data) {

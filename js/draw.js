@@ -11,6 +11,8 @@ function initDraw() {
     let lastx = 0;
     let lasty = 0;
 
+    let hasDrawnAnything = false;
+
     canvas.addEventListener("mousedown", function () {
         isclicking = true;
     });
@@ -61,6 +63,7 @@ function initDraw() {
         c.moveTo(xf, yf);
         c.lineTo(xt, yt);
         c.stroke();
+        hasDrawnAnything = true;
     }
 
     function setSize(size) {
@@ -84,11 +87,17 @@ function initDraw() {
         penSize.max = canvas.width / 3;
         penSize.value = canvas.width / 10;
         setSize(penSize.value);
+        hasDrawnAnything = false;
+    }
+
+    function getHasDrawnAnything() {
+        return hasDrawnAnything;
     }
 
     resetCanvas();
 
     return {
-        reset: resetCanvas
+        reset: resetCanvas,
+        hasDrawnAnything: getHasDrawnAnything
     }
 }
