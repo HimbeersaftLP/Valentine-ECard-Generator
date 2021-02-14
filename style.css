@@ -39,6 +39,10 @@ label:after {
     height: 4em;
 }
 
+.btn-main {
+    height: 2.5em;
+}
+
 button.jscolor {
     height: 2rem;
     margin-bottom: .3rem;
