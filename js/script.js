@@ -1,86 +1,64 @@
 ﻿"use strict";
-let heads = false;
 let stillrendering = false;
 const textscale = 80;
-const imagebtn = document.getElementById("image");
-const picker = document.getElementById("imagePicker");
-const scategory = document.getElementById("category");
-const imagesl = document.getElementById("images");
+const listCustomBtn = document.getElementById("listCustom");
+const customImagePickerWin = document.getElementById("customImagePickerWin");
+const customImageList = document.getElementById("customImages");
 let selectedImage = "";
 const ttext = document.getElementById("mtext");
 const tto = document.getElementById("to");
 const tfrom = document.getElementById("from");
 const fstyle = document.getElementById("fontstyle");
 const font = document.getElementById("font");
-const fsize = document.getElementById("size");
+const fsize = document.getElementById("sizeText");
+const fsizeSlider = document.getElementById("sizeSlider");
 const bcolor = document.getElementById("backcl");
 const tcolor = document.getElementById("textcl");
 const saveImageBtn = document.getElementById("saveImage");
-const saveImageWin = document.getElementById("saveImageWindow");
+const saveImageWin = document.getElementById("saveImageWin");
 const saveImageImage = document.getElementById("saveImageImg");
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d", {alpha: false});
 ctx.textBaseline = "middle";
 
-Array.from(document.getElementsByClassName("window")).forEach(w => {
+function openWindow(w) {
+    document.body.className = "winOpen";
+    w.style.display = "";
+}
+
+function closeWindow(w) {
+    document.body.className ="";
+    w.style.display = "none";
+}
+
+const windows = document.getElementsByClassName("window");
+for (let i = 0; i < windows.length; i++) {
+    const w = windows[i];
     const b = document.createElement("button");
     b.className = "windowCloseBtn";
     b.innerHTML = "&times;";
-    b.addEventListener("click", () => w.style.display = "none");
+    b.addEventListener("click", function() {
+        closeWindow(w);
+    });
     w.insertBefore(b, w.firstChild);
-});
-
-const xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-        heads = JSON.parse(this.responseText);
-        scategory.removeChild(scategory.childNodes[1]);
-        for (const category in heads) {
-            addOption(scategory, category, category);
-        }
-        addOption(scategory, "Uploaded", "Uploaded Images");
-        updateImglist();
-    }
-};
-xhr.open("GET", "./images/images.json", true);
-xhr.send();
-
-function addOption(elem, val, text) {
-    const opt = document.createElement("option");
-    opt.value = val;
-    const desc = document.createTextNode(text);
-    opt.appendChild(desc);
-    elem.appendChild(opt);
-}
-
-scategory.onchange = function () {
-    updateImglist();
 };
 
-function updateImglist() {
-    if (!heads) return;
-    while (imagesl.firstChild) {
-        imagesl.removeChild(imagesl.firstChild);
+function updateCustomImageList() {
+    while (customImageList.firstChild) {
+        customImageList.removeChild(customImageList.firstChild);
     }
-    if (scategory.value === "Uploaded") {
-        localforage.getItem("images", function (err, data) {
-            if (err || data === null) return;
-            const currentImages = data.split("|");
-            for (let i = 0; i < currentImages.length; i++) {
-                addImageOption("Upload #" + (i + 1), currentImages[i], true);
-            }
-        });
-    } else {
-        for (const name in heads[scategory.value]) {
-            let image = heads[scategory.value][name];
-            addImageOption(image.name, "./images/" + name + ".png", false, image.source);
+    localforage.getItem("images", function (err, data) {
+        if (err || data === null) return;
+        const currentImages = data.split("|");
+        for (let i = 0; i < currentImages.length; i++) {
+            addImageOption(customImageList, "Upload #" + (i + 1), currentImages[i]);
         }
-    }
+    });
     updateFont();
 }
 
-function addImageOption(name, url, uploaded, source) {
+function addImageOption(listElement, name, url, source) {
     if (!selectedImage) selectedImage = url;
 
     const pickerElement = document.createElement("div");
@@ -94,32 +72,34 @@ function addImageOption(name, url, uploaded, source) {
     imageInfo.className = "imageInfo";
     imageInfo.appendChild(document.createTextNode(name));
 
-    if (uploaded) {
+    if (source) {
+        const imageDetails = document.createElement("small");
+        imageDetails.appendChild(document.createTextNode("Source: "));
+        const imageSourceLink = document.createElement("a");
+        imageSourceLink.href = source;
+        imageSourceLink.appendChild(document.createTextNode(source));
+        imageDetails.appendChild(imageSourceLink);
+        imageInfo.appendChild(imageDetails);
+    } else {
         const imageDelete = document.createElement("button");
         imageDelete.appendChild(document.createTextNode("Delete"));
         imageInfo.appendChild(imageDelete);
     }
 
-    if (source) {
-        const imageDetails = document.createElement("small");
-        imageDetails.appendChild(document.createTextNode("Source: " + source));
-        imageInfo.appendChild(imageDetails);
-    }
-
     pickerElement.appendChild(img);
     pickerElement.appendChild(imageInfo);
-    imagesl.appendChild(pickerElement);
+    listElement.appendChild(pickerElement);
 }
-
 saveImageBtn.addEventListener("click", function () {
-    saveImageWin.style.display = "";
+    openWindow(saveImageWin);
     saveImageImage.src = canvas.toDataURL();
 });
-imagebtn.addEventListener("click", function () {
-    picker.style.display = "";
-    updateImglist();
+listCustomBtn.addEventListener("click", function () {
+    openWindow(customImagePickerWin);
+    updateCustomImageList();
 });
-imagesl.addEventListener("click", function (e) {
+
+customImageList.addEventListener("click", function (e) {
     let p = e.target;
     while (p.className !== "pickerElement") {
         p = p.parentElement;
@@ -129,18 +109,19 @@ imagesl.addEventListener("click", function (e) {
         localforage.getItem("images", function (err, data) {
             if (err) return;
             let currentImages = data.split("|");
-            currentImages = currentImages.filter((img) => {
+            currentImages = currentImages.filter(function (img) {
                 return img !== selectedImage;
             });
             data = currentImages.join("|");
             if (data === "") data = null;
-            localforage.setItem("images", data, updateImglist);
+            localforage.setItem("images", data, updateCustomImageList);
         });
         return;
     }
-    picker.style.display = "none";
+    closeWindow(customImagePickerWin);
     renderCard();
 });
+
 ttext.oninput = renderCard;
 tto.oninput = renderCard;
 tfrom.oninput = renderCard;
@@ -148,13 +129,18 @@ fstyle.onchange = updateFont;
 font.onchange = updateFont;
 fsize.onchange = updateFont;
 
+fsizeSlider.addEventListener("input", function() {
+    fsize.value = fsizeSlider.value;
+    updateFont();
+});
+
 function setFontSize(size) {
     ctx.font = fstyle.value + " " + size + "px " + font.value;
 }
 
-function updateFont(rerender = true) {
+function updateFont() {
     setFontSize(textscale * fsize.value);
-    if (rerender) renderCard();
+    renderCard();
 }
 
 function renderImage() {
@@ -239,5 +225,5 @@ function multiLineTextScaled(text, x, ymin, ymax) {
         ctx.fillText(lines[i], x, y);
         y += size;
     }
-    updateFont(false);
+    setFontSize(textscale * fsize.value);
 }

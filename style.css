@@ -1,5 +1,26 @@
-﻿body {
+﻿html, body, .container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
     font-family: Arial, sans-serif;
+}
+
+.container {
+    background-color: #efefef;
+}
+
+body.winOpen .container {
+    filter: brightness(.3);
+    pointer-events: none;
+}
+
+h1 {
+    margin: 0;
+    padding: 0.67em;
 }
 
 .setting {
@@ -15,7 +36,7 @@ label:after {
 }
 
 #mtext {
-    height: 4rem;
+    height: 4em;
 }
 
 button.jscolor {
@@ -31,36 +52,29 @@ button.jscolor {
 }
 
 .window {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    overflow-y: auto;
     background-color: #eee;
     opacity: .99;
+    padding-top: 2em;
+    box-sizing: border-box;
 }
 
 .windowCloseBtn {
+    position: fixed;
+    top: .2rem;
+    right: .2rem;
     width: 2rem;
     height: 2rem;
     border: solid 2px #333;
     border-radius: 50%;
-    margin: .2rem .2rem .2rem auto;
     display: block;
     font-size: 1.5rem;
     background: none;
-}
-
-.category {
-    width: 100%;
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    background-color: #aaa;
-}
-
-.category select {
-    flex-grow: 1;
 }
 
 .pickerElement {
@@ -115,6 +129,18 @@ button.jscolor {
     width: 100%;
 }
 
+#searchLoading, #searchNavigation {
+    display: none;
+}
+
+.window.searchLoading > #searchLoading {
+    display: block;
+}
+
+.window.searchNavigation > #searchNavigation {
+    display: block;
+}
+
 @media (min-width: 600px) {
     .main {
         display: flex;
@@ -126,5 +152,17 @@ button.jscolor {
         margin-left: 2rem;
         margin-right: 2rem;
         min-width: 15rem;
+    }
+
+    .window {
+        width: 590px;
+        left: calc(50% - 590px/2);
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .windowCloseBtn {
+        right: calc(50% - 670px / 2 + .2rem);
+        background: white;
     }
 }
