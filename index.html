@@ -26,9 +26,9 @@
         <div class="settings">
             <div class="setting">
                 <span>Image:</span>
-                <button class="btn-main" id="imageSearch">Search image</button>
-                <button class="btn-main" id="customImage">Upload image</button>
-                <button class="btn-main" id="listCustom">List saved images</button>
+                <button id="imageSearch">Search image</button>
+                <button id="customImage">Upload image</button>
+                <button id="listCustom">List saved images</button>
             </div>
             <div class="setting">
                 <label for="mtext">Text</label>
@@ -47,7 +47,7 @@
                 <button class="jscolor {closable:true,closeText:'Close',valueElement:'backcl',value:'cc2211',onFineChange:'renderCard()'}"
                         id="backclb">Click to select
                 </button>
-                <input id="backcl" value="CC2211"/>
+                <input type="text" id="backcl" value="CC2211"/>
 
             </div>
             <div id="fontoptions">
@@ -56,7 +56,7 @@
                     <button class="jscolor {closable:true,closeText:'Close',valueElement:'textcl',value:'ffffff',onFineChange:'renderCard()'}"
                             id="textclb">Click to select
                     </button>
-                    <input id="textcl" value="FFFFFF"/>
+                    <input type="text" id="textcl" value="FFFFFF"/>
                 </div>
                 <div class="setting">
                     <label for="fontstyle">Effect</label>
@@ -78,10 +78,10 @@
                 </div>
             </div>
             <div class="setting">
-                <button class="btn-main" id="saveImage">Save image</button>
+                <button id="saveImage">Save image</button>
             </div>
             <footer style="margin-top: 2rem;">
-                <small style="color: grey;">Website: &copy;2020 Himbeer</small>
+                <small style="color: grey;">Website: &copy;2021 Himbeer</small>
                 <a href="https://github.com/HimbeersaftLP/Valentine-ECard-Generator">Github</a>
                 <a href="https://twitter.com/himbeerme">Twitter</a>
             </footer>
@@ -89,10 +89,12 @@
     </div>
 </div>
 <div class="window" id="imageSearchWin" style="display: none;">
-    <form id="searchForm">
-        <input type="search" id="searchText">
-        <button type="submit">Search</button>
-    </form>
+    <div class="winHeader">
+        <form id="searchForm">
+            <input type="search" id="searchText">
+            <button type="submit">Search</button>
+        </form>
+    </div>
     <div id="searchResults">
 
     </div>
@@ -112,15 +114,17 @@
     <button id="customImageConfirm">Okay</button>
 </div>
 <div class="window" id="customImageCropperWin" style="display: none; vertical-align: middle;">
-    <p>Draw over the part of the image you want to keep, then press "Crop" to crop and "Save" to use the image.</p>
-    <p>You can access your picture with the "List saved images" button.</p>
-    <div>
-        <label for="penSize">Brush size</label>
-        <input id="penSize" type="range" min="1" max="50" value="10">
-    </div>
-    <div>
-        <button id="cropCrop">Crop</button>
-        <button id="cropConfirm">Save</button>
+    <div class="winHeader">
+        <p>Draw over the part of the image you want to keep, then press "Crop" to crop and "Save" to use the image.</p>
+        <p>You can access your picture with the "List saved images" button.</p>
+        <div>
+            <label for="penSize">Brush size</label>
+            <input id="penSize" type="range" min="1" max="50" value="10">
+        </div>
+        <div>
+            <button id="cropCrop">Crop</button>
+            <button id="cropConfirm">Save</button>
+        </div>
     </div>
     <div class="cropCanvasContainer">
         <canvas id="originalImage"></canvas>

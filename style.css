@@ -24,11 +24,12 @@ h1 {
 }
 
 .setting {
-    margin-top: 1rem;
+    padding: .5em;
 }
 
 .setting > * {
     width: 100%;
+    box-sizing: border-box;
 }
 
 label:after {
@@ -39,20 +40,53 @@ label:after {
     height: 4em;
 }
 
-.btn-main {
+button,
+textarea,
+input[type=text],
+input[type=number],
+input[type=search],
+select {
+    border: solid .2em black;
+    border-radius: .5em;
+}
+
+input[type=text],
+input[type=number],
+select {
+    height: 2em;
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+input[type=search] {
     height: 2.5em;
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+button {
+    height: 2.5em;
+    background: white;
+    box-shadow: none;
+}
+
+select {
+    background: white;
+}
+
+#customImage {
+    margin-top: .3em;
+    margin-bottom: .3em;
 }
 
 button.jscolor {
-    height: 2rem;
     margin-bottom: .3rem;
-    border: solid 1px grey;
-    border-radius: .5rem;
 }
 
 #canvas {
     width: 100%;
     border: 1px solid black;
+    box-sizing: border-box;
 }
 
 .window {
@@ -64,8 +98,12 @@ button.jscolor {
     overflow-y: auto;
     background-color: #eee;
     opacity: .99;
-    padding-top: 2em;
+    padding: .5em;
     box-sizing: border-box;
+}
+
+.winHeader {
+    margin-bottom: .5em;
 }
 
 .windowCloseBtn {
@@ -79,6 +117,7 @@ button.jscolor {
     display: block;
     font-size: 1.5rem;
     background: none;
+    padding: 1px 0;
 }
 
 .pickerElement {
@@ -145,7 +184,7 @@ button.jscolor {
     display: block;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 675px) {
     .main {
         display: flex;
         width: 100%;
@@ -161,8 +200,6 @@ button.jscolor {
     .window {
         width: 590px;
         left: calc(50% - 590px/2);
-        padding-left: 10px;
-        padding-right: 10px;
     }
 
     .windowCloseBtn {
