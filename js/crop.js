@@ -19,8 +19,8 @@
 
     window.createCropperFor = function(src) {
         const img = new Image();
-        img.src = src;
         img.crossOrigin = "Anonymous"; // So cropping from Pixabay URLs works
+        img.src = src;
         img.addEventListener("load", function () {
             imageCanvas.width = maskCanvas.width = img.width;
             imageCanvas.height = maskCanvas.height = img.height;
