@@ -104,22 +104,24 @@ customImageList.addEventListener("click", function (e) {
     while (p.className !== "pickerElement") {
         p = p.parentElement;
     }
-    selectedImage = p.getAttribute("data-image-url");
+    let clickedImage = p.getAttribute("data-image-url");
     if (e.target.tagName === "BUTTON") {
         localforage.getItem("images", function (err, data) {
             if (err) return;
             let currentImages = data.split("|");
             currentImages = currentImages.filter(function (img) {
-                return img !== selectedImage;
+                return img !== clickedImage;
             });
             data = currentImages.join("|");
             if (data === "") data = null;
             localforage.setItem("images", data, updateCustomImageList);
         });
         return;
+    } else {
+        selectedImage = clickedImage;
+        closeWindow(customImagePickerWin);
+        renderCard();
     }
-    closeWindow(customImagePickerWin);
-    renderCard();
 });
 
 ttext.oninput = renderCard;
