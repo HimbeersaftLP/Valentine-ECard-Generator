@@ -58,7 +58,7 @@ function updateCustomImageList() {
     updateFont();
 }
 
-function addImageOption(listElement, name, url, source) {
+function addImageOption(listElement, name, url, pixabayInfo) {
     if (!selectedImage) selectedImage = url;
 
     const pickerElement = document.createElement("div");
@@ -66,18 +66,23 @@ function addImageOption(listElement, name, url, source) {
     pickerElement.setAttribute("data-image-url", url);
 
     const img = document.createElement("img");
-    img.src = url;
+    if (pixabayInfo) {
+        img.src = pixabayInfo.previewURL;
+        img.style.aspectRatio = pixabayInfo.previewWidth + "/" + pixabayInfo.previewHeight;
+    } else {
+        img.src = url;
+    }
 
     const imageInfo = document.createElement("div");
     imageInfo.className = "imageInfo";
     imageInfo.appendChild(document.createTextNode(name));
 
-    if (source) {
+    if (pixabayInfo) {
         const imageDetails = document.createElement("small");
         imageDetails.appendChild(document.createTextNode("Source: "));
         const imageSourceLink = document.createElement("a");
-        imageSourceLink.href = source;
-        imageSourceLink.appendChild(document.createTextNode(source));
+        imageSourceLink.href = pixabayInfo.pageURL;
+        imageSourceLink.appendChild(document.createTextNode(pixabayInfo.pageURL));
         imageDetails.appendChild(imageSourceLink);
         imageInfo.appendChild(imageDetails);
     } else {

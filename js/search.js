@@ -35,7 +35,7 @@
             const data = JSON.parse(text);
             for (let i = 0; i < data.hits.length; i++) {
                 const entry = data.hits[i];
-                addImageOption(searchResultList, entry.tags + " by " + entry.user, entry.webformatURL, entry.pageURL);
+                addImageOption(searchResultList, entry.tags + " by " + entry.user, entry.webformatURL, entry);
             }
             if (data.totalHits > 20) {
                 imageSearchWin.className = "window searchNavigation";
